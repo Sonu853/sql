@@ -1,0 +1,27 @@
+1) select CustomerId from customermaster;
+
+2)select OrderId from invoice;
+
+3)SELECT DISTINCT RegionCode FROM customermaster ;
+
+4)select DISTINCT OrderId from Invoice where CustomerId='1631';
+
+5)select CustomerId,RegionCode from customermaster where RegionCode='BA' or RegionCode='CH' or RegionCode='MU' or RegionCode='PU';
+
+6)SELECT OrderId,OrderDate FROM orderreg where year(OrderDate)='2005';
+
+7)SELECT InvoiceId,CustomerId,InvoiceDt FROM invoice where year(InvoiceDt)='2005' AND CustomerId='961';
+
+8)SELECT ShortName FROM customermaster WHERE ShortName LIKE 'T%';
+
+9)select InvoiceId,CustomerId,InvoiceDt from invoice where CustomerId='1631' or month(InvoiceDt)='3' and year(InvoiceDt)='2005' ;
+
+10)SELECT count(*) FROM customermaster;
+
+11)SELECT count(*) FROM orderreg where year(OrderDate)='2006' AND CustomerId='1631';
+
+12)select sum(PaidAmount) from payments;
+
+13)select sum(GrandTotal) from invoice where CustomerId='961';
+
+14)SELECT sum(OutstandingAmount) FROM payments ;

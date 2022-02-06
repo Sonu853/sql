@@ -1,0 +1,87 @@
+1)SELECT count(*),RegionCode FROM customermaster group by RegionCode;
+
+  SELECT count(*),RegionCode FROM customermaster group by RegionCode order by   count(*) desc limit 3;
+
+2)SELECT count(OrderId),CustomerId FROM invoice group by CustomerId;
+
+3)SELECT CustomerId,sum(GrandTotal) FROM invoice group by CustomerId;
+
+4)SELECT CustomerId,InvoiceDt,sum(GrandTotal) 
+  FROM invoice
+
+  where year(InvoiceDt)='2005'
+  
+group by CustomerId;
+
+5)SELECT orderreg.OrderId,orderreg.OrderDate,customermaster.CustomerId,       customermaster.ShortName,customermaster.RegionCode
+FROM customermaster
+
+  INNER JOIN orderreg
+
+  ON customermaster.CustomerId = orderreg.CustomerId;
+
+6)SELECT invoice.InvoiceId,invoice.InvoiceDt,invoice.InvoiceTotal,invoice.OrderId,    orderreg.OrderDate
+
+  FROM invoice
+
+  INNER join orderreg
+
+  ON invoice.OrderId = orderreg.OrderId;
+
+7)SELECT invoice.InvoiceId,invoice.InvoiceDt,invoice.InvoiceTotal,
+  payments.PaidAmount,
+  payments.OutstandingAmount
+
+  FROM invoice
+
+  INNER join payments
+
+  ON invoice.InvoiceId = payments.InvoiceId;
+
+8)SELECTorderreg.OrderId,orderreg.OrderDate,customermaster.CustomerId,
+  customermaster.ShortName,customermaster.RegionCode
+FROM customermaster
+
+  INNER JOIN orderreg
+
+  ON customermaster.CustomerId = orderreg.CustomerId 
+  
+where year(OrderDate)='2006';
+
+9)SELECT productmaster.ItemNo,productmaster.ListPrice,
+  productmaster.MarketingFactor,orderitems.Rate,orderitems.Qty,orderitems.Total
+
+  FROM orderitems
+
+  INNER JOIN productmaster
+
+  ON orderitems.ItemNo = productmaster.ItemNo ;
+
+10)SELECTcustomermaster.CustomerId,customermaster.ShortName,
+   customermaster.RegionCode,orderreg.OrderId,orderreg.OrderDate
+   
+FROM customermaster
+
+   INNER JOIN orderreg
+  
+ ON customermaster.CustomerId = orderreg.CustomerId ;
+
+11)SELECT count(OrderId),customermaster.RegionCode
+
+   FROM customermaster
+   
+INNER JOIN orderreg
+   
+ON customermaster.CustomerId = orderreg.CustomerId
+   
+group by RegionCode ;
+
+12)SELECT count(InvoiceId),RegionCode  
+
+   from customermaster
+
+   inner join invoice 
+
+   on customermaster.CustomerId=invoice.CustomerId
+
+   group by RegionCode;

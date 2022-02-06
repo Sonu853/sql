@@ -1,0 +1,135 @@
+1)SELECT customermaster.CustomerId,customermaster.ShortName,
+  customermaster.RegionCode,invoice.InvoiceId,invoice.InvoiceTotal,
+  payments.PaidAmount,payments.OutstandingAmount
+
+  FROM customermaster
+
+  inner JOIN invoice ON customermaster.CustomerId = invoice.CustomerId
+
+  inner join payments on invoice.InvoiceId=payments.InvoiceId;
+
+2)select customermaster.CustomerId,customermaster.ShortName,
+  customermaster.RegionCode,orderreg.OrderId,orderreg.OrderDate,invoice.InvoiceId,
+  invoice.InvoiceTotal,payments.PaidAmount,payments.OutstandingAmount
+
+  from customermaster
+
+  inner join invoice on customermaster.CustomerId=invoice.CustomerId
+
+  inner join orderreg on invoice.orderId=orderreg.orderid
+
+  inner join payments on invoice.invoiceId=payments.invoiceId;
+
+3)SELECT orderreg.OrderId,orderreg.OrderDate,productmaster.ItemNo,
+  productmaster.ListPrice,productmaster.MarketingFactor,orderitems.Rate,
+  orderitems.Qty,orderitems.Total
+
+  FROM orderitems
+
+  inner JOIN orderreg ON orderitems.OrderId = orderreg.OrderId
+
+  inner join productmaster on orderitems.ItemNo=productmaster.ItemNo;
+
+4)SELECT customermaster.CustomerId,customermaster.ShortName,
+  count(orderreg.OrderId) as OrderValue 
+  FROM customermaster
+
+  INNER JOIN orderreg
+
+  ON customermaster.CustomerId = orderreg.CustomerId
+
+  group by CustomerId order by customerId;
+
+5)SELECT customermaster.CustomerId,customermaster.ShortName,
+  
+  count(invoice.InvoiceId) as InvoiceValue,
+  count(invoice.InvoiceTotal) as OrderValue
+
+  FROM customermaster
+
+  INNER JOIN invoice 
+ON customermaster.CustomerId = invoice.CustomerId
+
+  group by CustomerId order by customerId;
+
+6)select month(InvoiceDt),sum(GrandTotal)
+ as InvoiceValue
+  from invoice
+
+  where year(InvoiceDt)='2006'
+
+  group by year(2006),month(InvoiceDt)
+
+  order by year(2006),month(InvoiceDt);
+
+7)SELECT customerid,year(InvoiceDt),sum(GrandTotal)
+
+  FROM invoice
+
+  where customerid='1631'
+
+  GROUP BY year(InvoiceDt);
+
+8)SELECT customermaster.RegionCode,sum(invoice.InvoiceTotal) as CollectionsValue
+  
+FROM customermaster
+  
+  INNER JOIN invoice
+
+  ON customermaster.CustomerId = invoice.CustomerId
+
+  group by RegionCode order by RegionCode;
+
+9)SELECT customermaster.ShortName,orderreg.OrderId,orderreg.OrderDate,
+  orderreg.OrderType
+
+  FROM customermaster
+
+  INNER JOIN orderreg
+
+  ON customermaster.CustomerId = orderreg.CustomerId where ShortName=(select ShortName from   customermaster where ShortName='PRS');
+
+10)SELECT customerId, (select count(OrderId)) AS total_order
+
+   from orderreg
+
+   GROUP BY customerId order by CustomerId;
+
+11)SELECT invoice.CustomerId,payments.PaidAmount as SalesValue,invoice.GrandTotal    as CollectionValue
+
+   FROM invoice
+   
+INNER JOIN payments
+   
+ON invoice.InvoiceId = payments.InvoiceId
+
+   group by CustomerId;
+
+12)SELECT orderreg.CustomerId,orderreg.OrderId,orderreg.OrderDate,
+   orderreg.OrderType,customermaster.RegionCode 
+from customermaster
+
+   inner join orderreg 
+
+   on customermaster.CustomerId=orderreg.CustomerId 
+
+   where RegionCode='BA';
+
+13)SELECT ItemNo,ListPrice,MarketingFactor
+
+   FROM productmaster 
+
+   where not exists (select orderId from orderitems
+
+   where  orderitems.ItemNo=productmaster.ItemNo);
+
+14)SELECT customermaster.RegionCode,count(orderreg.OrderId)
+
+   as TotalOrder
+   FROM customermaster
+
+   INNER JOIN orderreg
+
+   ON customermaster.CustomerId = orderreg.CustomerId
+
+   group by RegionCode order by RegionCode;
